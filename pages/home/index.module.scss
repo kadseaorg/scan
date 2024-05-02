@@ -1,0 +1,19 @@
+.searchWrap {
+  @apply w-full px-[44px] py-[40px] flex items-center relative text-white rounded-lg sm:p-0;
+}
+
+.listWrap {
+  @apply w-full h-full;
+
+  .cell {
+    @apply w-full p-4 flex justify-between items-center relative last:after:content-[none];
+
+    &:after {
+      @apply content-[''] w-[calc(100%-24px)] h-[1px] bg-border absolute left-3 bottom-0 dark:bg-[#333];
+    }
+
+    .label {
+      @apply w-[36px] h-[36px] flex-shrink-0 font-medium flex-center rounded-full bg-primary dark:bg-primary dark:bg-opacity-20 text-primary dark:text-primary mr-3 relative;
+    }
+  }
+}

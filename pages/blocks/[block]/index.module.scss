@@ -1,0 +1,23 @@
+.arrowBtn {
+  @apply w-[22px] h-[22px] flex-center text-xs text-primary dark:text-foreground bg-primary cursor-pointer transition-all rounded  dark:bg-primary bg-opacity-20 dark:bg-opacity-20;
+
+  &.disabled {
+    @apply opacity-70 cursor-not-allowed;
+
+    &:hover {
+      @apply bg-primary dark:bg-primary;
+
+      > span {
+        @apply text-primary;
+      }
+    }
+  }
+
+  &:hover {
+    @apply bg-primary dark:bg-primary dark:text-white;
+
+    > span {
+      @apply text-white;
+    }
+  }
+}

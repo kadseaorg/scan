@@ -1,0 +1,46 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../lib/generated/prisma/zksync_node"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("ZKSYNC_NODE_DATABASE_URL")
+}
+
+model compiler_versions {
+  version    String
+  compiler   String
+  created_at DateTime @db.Timestamp(6)
+  updated_at DateTime @db.Timestamp(6)
+
+  @@id([version, compiler])
+}
+
+model contract_verification_requests {
+  id                    BigInt    @id @default(autoincrement())
+  contract_address      Bytes
+  source_code           String
+  contract_name         String
+  zk_compiler_version   String
+  optimization_used     Boolean
+  constructor_arguments Bytes
+  status                String
+  error                 String?
+  created_at            DateTime  @db.Timestamp(6)
+  updated_at            DateTime  @db.Timestamp(6)
+  compilation_errors    Json?
+  processing_started_at DateTime? @db.Timestamp(6)
+  compiler_version      String    @default("0.8.16")
+  attempts              Int       @default(0)
+  panic_message         String?
+  is_system             Boolean   @default(false)
+  optimizer_mode        String?
+}
+
+model contracts_verification_info {
+  address           Bytes     @id(map: "contracts_pkey")
+  created_at        DateTime? @db.Timestamp(6)
+  updated_at        DateTime? @db.Timestamp(6)
+  verification_info Json?
+}
