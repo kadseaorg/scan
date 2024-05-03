@@ -7,7 +7,7 @@ on:
       - dev
 
 env:
-  REGISTRY: ghcr.io
+  REGISTRY: kadseaorg
   IMAGE_NAME: ${{ github.repository }}
 
 jobs:
@@ -19,30 +19,12 @@ jobs:
     strategy:
       matrix:
         config:
-          - chain: 'scroll-sepolia'
-            site_url: 'https://scroll-sepolia.l2scan.co/'
-          - chain: 'scroll'
-            site_url: 'https://scroll.l2scan.co/'
-          - chain: 'linea'
-            site_url: 'https://linea.l2scan.co/'
-          - chain: 'zksync-era'
-            site_url: 'https://zksync-era.l2scan.co/'
-          - chain: 'zksync-era-sepolia'
-            site_url: 'https://zksync-era-sepolia.l2scan.co/'
-          - chain: 'base'
-            site_url: 'https://base.l2scan.co/'
-          - chain: 'arb-one'
-            site_url: 'https://arbitrum.l2scan.co/'
-          - chain: 'bsquared-testnet'
-            site_url: 'https://bsquared-testnet.l2scan.co/'
           - chain: 'kadsea'
             site_url: 'https://kadscan.kadsea.org/'
           - chain: 'okx1-testnet'
             site_url: 'https://okx1-testnet.l2scan.co/'
           - chain: 'kadsea-testnet'
             site_url: 'https://kadscan.kadsea.ink/'
-          - chain: 'oro-testnet'
-            site_url: 'https://oro-testnet.l2scan.co/'
 
     steps:
       - name: Checkout
