@@ -694,7 +694,7 @@ export const CHAIN_MAP: Record<EnumChainType, IChainItem> = {
 		title: 'Kadsea Testnet',
 		l1Title: 'KAD',
 		logo: '/svgs/logo/kadsea.png',
-		description: 'The Native Bitcoin Layer2',
+		description: 'KAD',
 		chainType: EnumChainType.KADSEA_TESTNET,
 		darkOnly: true,
 		nativeCurrency: kadseaTestnet.nativeCurrency,
