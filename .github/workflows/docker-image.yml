@@ -21,8 +21,6 @@ jobs:
         config:
           - chain: 'kadsea'
             site_url: 'https://kadscan.kadsea.org/'
-          - chain: 'okx1-testnet'
-            site_url: 'https://okx1-testnet.l2scan.co/'
           - chain: 'kadsea-testnet'
             site_url: 'https://kadscan.kadsea.ink/'
 
