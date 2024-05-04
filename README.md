@@ -66,11 +66,11 @@ run the docker image
 
 ```sh
 docker run \
--e DATABASE_URL="postgres://user:password@localhost:5432/mydatabase" \
--e REDIS_URL="redis://localhost:6379" \
--e VERIFICATION_URL="http://localhost:8050" \
+-e DATABASE_URL="postgres://postgres:xNWXdwq4pIXVynWu@18.163.74.190:5432/kadsea" \
+-e REDIS_URL="redis://:A4%26xBQJBc6@18.163.74.190:7069" \
+-e VERIFICATION_URL="http://127.0.0.1:8050" \
 -p 3000:3000 \
-l2scan
+kadseaorg/kadscan:main-kadsea
 ```
 
 ## 4byte Directory
