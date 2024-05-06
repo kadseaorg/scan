@@ -1096,7 +1096,7 @@ const initialChains: BaseChain[] = [
 			decimal: 18,
 			address: '0xB0F248395493CAf13a2f2576aF0780788bA48619',
 		},
-		scanUrl: 'https://kadscan.kadsea.org/',
+		scanUrl: 'https://scan.kadchain.cc/',
 		scanName: 'kadsea explorer',
 		vmType: 'EVM',
 		rpcUrl: 'https://rpchttp.kadsea.org/',

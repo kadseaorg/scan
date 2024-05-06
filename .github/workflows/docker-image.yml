@@ -20,7 +20,7 @@ jobs:
       matrix:
         config:
           - chain: 'kadsea'
-            site_url: 'https://kadscan.kadsea.org/'
+            site_url: 'https://scan.kadchain.cc/'
           - chain: 'kadsea-testnet'
             site_url: 'https://kadscan.kadsea.ink/'
 

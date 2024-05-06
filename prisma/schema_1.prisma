@@ -1,0 +1,463 @@
+generator client {
+  provider        = "prisma-client-js"
+  output          = "../lib/generated/prisma/main"
+  previewFeatures = ["fullTextSearch"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model blocks {
+  number                     BigInt   @id
+  hash                       String   @unique
+  transaction_count          Int?
+  internal_transaction_count Int?
+  trace_checked              Boolean?
+  validator                  String?
+  difficulty                 Decimal? @db.Decimal(80, 0)
+  total_difficulty           Decimal? @db.Decimal(80, 0)
+  size                       Int?
+  nonce                      String?
+  gas_used                   BigInt?
+  gas_limit                  BigInt?
+  extra_data                 String?
+  parent_hash                String?
+  sha3_uncle                 String?
+  timestamp                  BigInt?
+  l1_batch_number            BigInt?
+  l1_batch_timestamp         BigInt?
+  inserted_at                DateTime @default(now())
+  updated_at                 DateTime @default(now())
+
+  @@index([hash])
+  @@index([l1_batch_number])
+}
+
+model transactions {
+  id                BigInt   @id @default(autoincrement())
+  hash              String   @unique
+  block_hash        String
+  block_number      BigInt
+  from_address      String?
+  to_address        String?
+  value             Decimal? @db.Decimal(80, 0)
+  fee               Decimal? @db.Decimal(80, 0)
+  l1fee             Decimal? @db.Decimal(80, 0)
+  gas_used          BigInt?
+  gas_price         BigInt?
+  gas_limit         BigInt?
+  method_id         String?
+  input             String?
+  nonce             Int?
+  status            Int?
+  transaction_index Int?
+  transaction_type  String?
+  max_priority      Decimal?
+  max_fee           Decimal?
+  revert_reason     String?
+  l1_batch_number   BigInt?
+  l1_batch_tx_index Int?
+  timestamp         BigInt?
+  inserted_at       DateTime @default(now())
+  updated_at        DateTime @default(now())
+
+  @@index([hash])
+  @@index([block_hash])
+  @@index([block_number])
+  @@index([l1_batch_number])
+  @@index([from_address])
+  @@index([to_address])
+  @@index([timestamp])
+}
+
+model inscriptions {
+  id                BigInt   @id @default(autoincrement())
+  transaction_hash  String   @unique
+  transaction_index Int
+  from_address      String
+  to_address        String
+  block_number      BigInt
+  gas_price         BigInt?
+  full_inscription  Json
+  timestamp         BigInt
+  inserted_at       DateTime @default(now())
+  updated_at        DateTime @default(now())
+
+  @@index([transaction_hash])
+  @@index([block_number])
+  @@index([from_address])
+  @@index([to_address])
+  @@index([timestamp])
+  @@index([full_inscription(ops: JsonbPathOps)], type: Gin)
+}
+
+model inscription_whitelist {
+  id             BigInt   @id @default(autoincrement())
+  deploy_txhash  String   @unique
+  timestamp      BigInt
+  block_number   BigInt
+  tick           String   @unique
+  max_supply     BigInt
+  limit_per_mint BigInt
+  standard       String
+  mint_json      Json
+  inserted_at    DateTime @default(now())
+  updated_at     DateTime @default(now())
+
+  @@index([deploy_txhash])
+  @@index([tick])
+}
+
+model l1_batches {
+  number                BigInt    @id @default(autoincrement())
+  commit_tx_hash        String?
+  committed_at          DateTime?
+  execute_tx_hash       String?
+  executed_at           DateTime?
+  prove_tx_hash         String?
+  proven_at             DateTime?
+  root_hash             String?
+  status                String?
+  l1_gas_price          BigInt?
+  l1_tx_count           BigInt?
+  l2_fair_gas_price     BigInt?
+  l2_tx_count           BigInt?
+  timestamp             BigInt
+  inserted_at           DateTime  @default(now())
+  updated_at            DateTime  @default(now())
+  l1_prove_block_number BigInt?
+  l2_block_number       BigInt?
+}
+
+model transaction_logs {
+  id               BigInt   @id @default(autoincrement())
+  transaction_hash String
+  log_index        Int
+  address          String
+  topic1           String?
+  topic2           String?
+  topic3           String?
+  topic4           String?
+  data             String?
+  removed          Boolean?
+  block_number     BigInt
+  block_hash       String
+  inserted_at      DateTime @default(now())
+  updated_at       DateTime @default(now())
+
+  @@unique([transaction_hash, log_index])
+  @@index([transaction_hash])
+  @@index([address])
+  @@index([topic1])
+  @@index([topic2])
+  @@index([topic3])
+  @@index([topic4])
+  @@index([block_number])
+}
+
+model contracts {
+  id                    BigInt   @id @default(autoincrement())
+  name                  String?
+  address               String   @unique
+  creator               String?
+  creation_tx_hash      String?
+  creation_bytecode     String?
+  deployed_bytecode     String?
+  abi                   Json?
+  constructor_arguments String?
+  sourcecode            String?
+  compiler_version      String?
+  optimization          Boolean?
+  optimization_runs     Int?
+  evm_version           String?
+  is_verified           Boolean?
+  inserted_at           DateTime @default(now())
+  updated_at            DateTime @default(now())
+  license               String?
+  creation_timestamp    BigInt?
+
+  @@index([creator])
+  @@index([creation_timestamp])
+  @@index([is_verified, creation_timestamp(sort: Desc)])
+}
+
+model tokens {
+  id           BigInt   @id @default(autoincrement())
+  name         String?
+  symbol       String?
+  address      String   @unique
+  decimals     Int?
+  total_supply Decimal? @db.Decimal(80, 0)
+  token_type   String?
+}
+
+model internal_transactions {
+  id                      BigInt   @id @default(autoincrement())
+  block_hash              String
+  block_number            String
+  parent_transaction_hash String
+  type                    String?
+  from_address            String?
+  to_address              String?
+  value                   Decimal? @db.Decimal(80, 0)
+  gas                     Decimal? @db.Decimal(80, 0)
+  gas_used                Decimal? @db.Decimal(80, 0)
+  input                   String?
+  output                  String?
+  method                  String?
+  timestamp               BigInt?
+  inserted_at             DateTime @default(now())
+  updated_at              DateTime @default(now())
+
+  @@index([block_hash])
+  @@index([block_number])
+  @@index([from_address])
+  @@index([to_address])
+  @@index([timestamp])
+  @@index([parent_transaction_hash])
+  @@index([to_address, timestamp(sort: Desc)])
+}
+
+model token_transfers {
+  id               BigInt    @id @default(autoincrement())
+  transaction_hash String?
+  log_index        Int?
+  method_id        String?
+  token_address    String?
+  block_number     BigInt?
+  block_hash       String?
+  from_address     String?
+  to_address       String?
+  value            Decimal?  @db.Decimal(80, 0)
+  amount           Decimal?  @db.Decimal(80, 0)
+  token_id         Decimal?  @db.Decimal(80, 0)
+  amounts          Decimal[] @db.Decimal(80, 0)
+  token_ids        Decimal[] @db.Decimal(80, 0)
+  token_type       String?
+  timestamp        BigInt?
+  inserted_at      DateTime  @default(now())
+  updated_at       DateTime  @default(now())
+
+  @@unique([transaction_hash, log_index])
+  @@index([transaction_hash])
+  @@index([from_address])
+  @@index([to_address])
+  @@index([token_address])
+  @@index([token_type])
+}
+
+model reorged_blocks {
+  id                         BigInt   @id @default(autoincrement())
+  number                     BigInt?
+  hash                       String?
+  validator                  String?
+  transaction_count          Int?
+  internal_transaction_count Int?
+  size                       Int?
+  gas_used                   BigInt?
+  gas_limit                  BigInt?
+  extra_data                 String?
+  parent_hash                String?
+  sha3_uncle                 String?
+  uncles                     String?
+  timestamp                  BigInt?
+  depth                      Int?
+  inserted_at                DateTime @default(now())
+  updated_at                 DateTime @default(now())
+}
+
+model address_balances {
+  id                   BigInt   @id @default(autoincrement())
+  address              String   @unique
+  balance              Decimal? @db.Decimal(100, 0)
+  updated_block_number BigInt?
+  inserted_at          DateTime @default(now())
+  updated_at           DateTime @default(now())
+}
+
+model token_balances {
+  id                   BigInt   @id @default(autoincrement())
+  address              String
+  token_address        String
+  token_id             Decimal? @db.Decimal(80, 0)
+  token_type           String
+  balance              Decimal? @db.Decimal(80, 0)
+  updated_block_number BigInt?
+  inserted_at          DateTime @default(now())
+  updated_at           DateTime @default(now())
+
+  @@unique([address, token_address, token_id, token_type])
+  @@index([token_address])
+}
+
+model signatures {
+  id   Int    @id @default(autoincrement())
+  hash String
+  name String
+
+  @@index([hash])
+}
+
+model contract_verify_job {
+  uid              String  @id @db.VarChar(64)
+  contract_address String? @db.VarChar(200)
+  compiler         String? @db.VarChar(200)
+  standard_json    String?
+  status           Int?    @db.SmallInt
+  failed_reason    String?
+}
+
+model account_watch_list {
+  id                  Int      @id @default(autoincrement())
+  user_id             String
+  address             String
+  email               String?
+  description         String?
+  notification_method String
+  track_erc20         Boolean  @default(false)
+  track_erc721        Boolean  @default(false)
+  track_erc1155       Boolean  @default(false)
+  inserted_at         DateTime @default(now())
+  updated_at          DateTime @default(now())
+
+  @@unique([user_id, address])
+  @@index([user_id])
+  @@index([address])
+}
+
+model dapp_watch_list {
+  id          Int      @id @default(autoincrement())
+  user_id     String
+  dapp_id     Int
+  inserted_at DateTime @default(now())
+  updated_at  DateTime @default(now())
+
+  @@unique([user_id, dapp_id])
+  @@index([user_id])
+  @@index([dapp_id])
+}
+
+model token_watch_list {
+  id          Int      @id @default(autoincrement())
+  user_id     String
+  address     String
+  inserted_at DateTime @default(now())
+  updated_at  DateTime @default(now())
+
+  @@unique([user_id, address])
+  @@index([user_id])
+  @@index([address])
+}
+
+model dapps {
+  id          Int      @id @default(autoincrement())
+  name        String
+  team        String?
+  logo        String?
+  description String?
+  contract    String?
+  categories  String[]
+  website     String?
+  discord     String?
+  media_url   String?
+  telegram    String?
+  twitter     String?
+  youtube     String?
+  addresses   String[]
+
+  @@index([categories], type: Gin)
+}
+
+model external_bridges {
+  id            Int     @id @default(autoincrement())
+  name          String
+  logo          String?
+  introduction  String?
+  tags          String?
+  external_link String
+  dappId        Int
+}
+
+model external_swaps {
+  id            Int     @id @default(autoincrement())
+  name          String
+  logo          String?
+  introduction  String?
+  tags          String?
+  external_link String
+}
+
+model sync_progress {
+  id    Int     @id @default(autoincrement())
+  key   String? @unique
+  value Int?
+}
+
+model address_to_labels {
+  id      BigInt   @id @default(autoincrement())
+  address String   @unique
+  name    String?
+  site    String?
+  labels  String[]
+}
+
+model label_to_addresses {
+  id        BigInt   @id @default(autoincrement())
+  label     String   @unique
+  addresses String[]
+}
+
+model accounts_list {
+  id           Int    @id @default(autoincrement())
+  user_id      String @unique
+  address_list String
+
+  @@index([user_id])
+}
+
+model bridge_stats {
+  id                 Int      @id @default(autoincrement())
+  type               String
+  network            String
+  token_symbol       String
+  token_address      String
+  token_decimals     Int
+  transaction_hash   String
+  transaction_status String
+  block_number       BigInt
+  value              Decimal  @db.Decimal(80, 0)
+  inserted_at        DateTime @default(now())
+  updated_at         DateTime @default(now())
+}
+
+model zksync_bridge_deposit_history {
+  id              Int      @id @default(autoincrement())
+  l1_tx_hash      String   @unique
+  l2_tx_hash      String
+  l1_tx_timestamp BigInt
+  inserted_at     DateTime @default(now())
+  updated_at      DateTime @default(now())
+
+  @@index([l2_tx_hash])
+}
+
+model zksync_bridge_withdraw_history {
+  id                Int      @id @default(autoincrement())
+  l1_batch_number   BigInt
+  l1_batch_tx_index Int
+  l1_tx_hash        String
+  l1_tx_timestamp   BigInt
+  inserted_at       DateTime @default(now())
+  updated_at        DateTime @default(now())
+}
+
+model mv_dapp_daily_transactions {
+  dapp_id Int
+  date    DateTime @db.Date
+  count   BigInt?
+
+  @@id([dapp_id, date])
+  @@ignore
+}

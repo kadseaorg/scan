@@ -230,7 +230,7 @@ export const kadsea = /*#__PURE__*/ defineChain({
 	blockExplorers: {
 		default: {
 			name: 'KAD SEA  Explorer',
-			url: 'https://kadscan.kadsea.org/',
+			url: 'https://scan.kadchain.cc/',
 		},
 	},
 	// contracts: {
@@ -637,7 +637,7 @@ export const CHAIN_MAP: Record<EnumChainType, IChainItem> = {
 		bridgeDepositMethodId: '', // mintPublic()
 	},
 	[EnumChainType.KADSEA]: {
-		url: 'https://kadscan.kadsea.org/',
+		url: 'https://scan.kadchain.cc/',
 		title: 'Kadsea',
 		l1Title: 'KAD',
 		logo: '/svgs/logo/kadsea.png',
@@ -652,14 +652,14 @@ export const CHAIN_MAP: Record<EnumChainType, IChainItem> = {
 		networkSwitchers: [
 			{
 				name: 'Kadsea',
-				explorerUrl: 'https://kadscan.kadsea.org/',
+				explorerUrl: 'https://scan.kadchain.cc/',
 			},
 			{
 				name: 'Kadsea Testnet',
 				explorerUrl: 'https://kadscan.kadsea.ink/',
 			},
 		],
-		blockExplorerUrl: 'https://kadscan.kadsea.org/',
+		blockExplorerUrl: 'https://scan.kadchain.cc/',
 		rpcUrl: kadsea.rpcUrls.default.http[0],
 		l1ExplorerUrl: '',
 		bridgeContract: [''],
@@ -690,7 +690,7 @@ export const CHAIN_MAP: Record<EnumChainType, IChainItem> = {
 		},
 	},
 	[EnumChainType.KADSEA_TESTNET]: {
-		url: 'https://kadscan.kadsea.org/',
+		url: 'https://scan.kadchain.cc/',
 		title: 'Kadsea Testnet',
 		l1Title: 'KAD',
 		logo: '/svgs/logo/kadsea.png',
@@ -709,10 +709,10 @@ export const CHAIN_MAP: Record<EnumChainType, IChainItem> = {
 			},
 			{
 				name: 'Kadsea Mainnet',
-				explorerUrl: 'https://kadscan.kadsea.org/',
+				explorerUrl: 'https://scan.kadchain.cc/',
 			},
 		],
-		blockExplorerUrl: 'https://kadscan.kadsea.org/',
+		blockExplorerUrl: 'https://scan.kadchain.cc/',
 		rpcUrl: kadseaTestnet.rpcUrls.default.http[0],
 		l1ExplorerUrl: '',
 		bridgeContract: [''],

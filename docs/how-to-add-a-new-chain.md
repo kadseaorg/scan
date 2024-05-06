@@ -40,7 +40,7 @@ export const kadsea = /*#__PURE__*/ defineChain({
 	blockExplorers: {
 		default: {
 			name: 'Kadsea Explorer',
-			url: 'https://kadscan.kadsea.org/',
+			url: 'https://scan.kadchain.cc/',
 		},
 	},
 	// contracts: {
@@ -60,7 +60,7 @@ export const CHAIN_MAP: Record<EnumChainType, IChainItem> = {
 ...
 
 [EnumChainType.KADSEA]: {
-		url: 'https://kadscan.kadsea.org/',
+		url: 'https://scan.kadchain.cc/',
 		title: 'Kadsea',
 		l1Title: 'ETH',
 		logo: '/svgs/logo/kadsea.svg',
@@ -74,10 +74,10 @@ export const CHAIN_MAP: Record<EnumChainType, IChainItem> = {
 		networkSwitchers: [
 			{
 				name: 'Kadsea',
-				explorerUrl: 'https://kadscan.kadsea.org/',
+				explorerUrl: 'https://scan.kadchain.cc/',
 			},
 		],
-		blockExplorerUrl: 'https://kadscan.kadsea.org/',
+		blockExplorerUrl: 'https://scan.kadchain.cc/',
 		rpcUrl: kadsea.rpcUrls.default.http[0],
 		l1ExplorerUrl: '',
 		bridgeContract: [''],
@@ -207,5 +207,5 @@ if (process.env.NEXT_PUBLIC_CHAIN === EnumChainType.KADSEA) {
         config:
           ...
           - chain: 'kadsea'
-            site_url: 'https://kadscan.kadsea.org/'
+            site_url: 'https://scan.kadchain.cc/'
 ```

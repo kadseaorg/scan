@@ -8,6 +8,6 @@ export const openApiDocument = generateOpenApiDocument(appRouter, {
 	version: '0.0.1',
 	baseUrl:
 		process.env.NODE_ENV === 'production'
-			? 'https://kadscan.kadsea.org/api'
+			? 'https://scan.kadchain.cc/api'
 			: 'http://localhost:3000/api',
 })
