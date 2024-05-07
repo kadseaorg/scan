@@ -62,7 +62,7 @@ export const NAV = {
 export const MAX_TAG_LIMIT = 1000
 
 export const ETH_ICON_URL = getImgSrc('eth')
-export const BTC_ICON_URL = getImgSrc('btc', true)
+export const BTC_ICON_URL = getImgSrc('kad', true)
 export const NATIVE_ICON_URL =
 	IsBsquaredTestnet || IsKadsea ? BTC_ICON_URL : ETH_ICON_URL
 export const ETH_SYMBOL = 'ETH'
